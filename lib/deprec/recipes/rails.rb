@@ -35,6 +35,7 @@ Capistrano::Configuration.instance(:must_exist).load do
   namespace :centos do
     namespace :rails do
 
+      desc "install rails gems"
       task :install, :roles => :app do
         gem2.install 'rails'
       end
