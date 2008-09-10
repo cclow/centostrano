@@ -31,11 +31,15 @@ Capistrano::Configuration.instance(:must_exist).load do
   after :deploy, :roles => :app do
     deploy.cleanup
   end
-    
+
   namespace :centos do
     namespace :rails do
 
       task :install, :roles => :app do
+        gem2.install 'rails'
+      end
+
+      task :install_with_sqlite_mysql_rspec, :roles => :app do
         install_deps
         install_gems
       end
@@ -78,7 +82,7 @@ Capistrano::Configuration.instance(:must_exist).load do
           top.centos.git.install     
           top.centos.mongrel.install
           top.centos.monit.install
-          top.centos.rails.install
+          top.centos.rails.install_with_sqlite_mysql_rspec
         end
          
         deprec2.for_roles('web,app') do
