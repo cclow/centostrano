@@ -4,6 +4,13 @@ Capistrano::Configuration.instance(:must_exist).load do
     namespace :postgresql do
       
       # Installation
+      desc "Install postgres gem on application server"
+      task :install_gem, :roles => :app do
+        apt.install( {:base => %w(postgresql-devel)}, :stable )
+        gem2.install "postgres"
+      end
+
+      #
       desc "Install postgresql"
       task :install, :roles => :db do
         install_deps
